@@ -1,11 +1,40 @@
+# route:
+#     receiver: 'slack'
+
+# receivers:
+#     - name: 'slack'
+#       slack_configs:
+#           - send_resolved: true
+#             text: "{{ .CommonAnnotations.description }}"
+#             username: 'Prometheus'
+#             channel: '#<channel-name>'
+#             api_url: 'https://hooks.slack.com/services/<webhook-id>'
+
 route:
-    receiver: 'slack'
+    receiver: 'discord'
 
 receivers:
-    - name: 'slack'
+    - name: 'discord'
       slack_configs:
           - send_resolved: true
-            text: "{{ .CommonAnnotations.description }}"
-            username: 'Prometheus'
-            channel: '#<channel-name>'
-            api_url: 'https://hooks.slack.com/services/<webhook-id>'
+            text: "{{ .CommonAnnotations.description }}{{ range .Alerts }}{{ .Annotations.summary }}\n{{ end }}"
+            #username: 'Prometheus'
+            #channel: '#<channel-name>'
+            api_url: 'https://discord.com/api/webhooks/1207809631863447552/Qss9zA3Ta00jZIIbNB3OdDLpUfJDenhx_k5YoBdjiLESUkSIsmN0XM9mMB4zMBl7z_5Z'
+
+#curl -H "Content-Type: application/json" -X POST -d '{"content":"Hello, World!"}' https://discord.com/api/webhooks/1207809631863447552/Qss9zA3Ta00jZIIbNB3OdDLpUfJDenhx_k5YoBdjiLESUkSIsmN0XM9mMB4zMBl7z_5Z
+
+# route:
+#     receiver: 'discord_webhook'
+#     repeat_interval: 1h
+#     group_by: ['alertname', 'cluster', 'service']
+#     group_wait: 5s
+#     group_interval: 5s
+
+
+# receivers:
+#     - name: 'discord_webhook'
+#       webhook_configs:
+#           - url: 'http://discord.alerts:9094'
+          
+

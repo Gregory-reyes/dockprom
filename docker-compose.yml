@@ -11,7 +11,7 @@ volumes:
 services:
 
   prometheus:
-    image: prom/prometheus:v2.48.0
+    image: prom/prometheus:v2.48.0  
     container_name: prometheus
     volumes:
       - ./prometheus:/etc/prometheus
@@ -46,6 +46,15 @@ services:
       - monitor-net
     labels:
       org.label-schema.group: "monitoring"
+
+  # discord-alerts:
+  #   image: benjojo/alertmanager-discord
+  #   container_name: discord-alerts
+  #   restart: unless-stopped
+  #   environment:
+  #     - DISCORD_WEBHOOK=https://discord.com/api/webhooks/1207809631863447552/Qss9zA3Ta00jZIIbNB3OdDLpUfJDenhx_k5YoBdjiLESUkSIsmN0XM9mMB4zMBl7z_5Z
+  #   ports:
+  #     - 9094
 
   nodeexporter:
     image: prom/node-exporter:v1.7.0
@@ -126,6 +135,7 @@ services:
       - "9090:9090"
       - "9093:9093"
       - "9091:9091"
+      # - "9094:9094"
     volumes:
       - ./caddy:/etc/caddy
     environment:
